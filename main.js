@@ -139,8 +139,13 @@ const refreshSelected = () => {
   const features = draw.getSelected().features;
   legendContainer.innerHTML = '';
   for (const feature of features) {
-    const area = Math.round(turf.area(feature) * 100) / 100;
-    const html = `<div class="border p-2"><h5>選択中地物</h5><ul class="mb-0"><li>面積: ${area}m<sup>2</sup></li></ul></div>`;
+    // const area = Math.round(turf.area(feature) * 100) / 100;
+    const featureId = feature.id;
+    const featureSpaces = map.getSource('cmap-spaces')._data.features.filter(feature => {
+      return feature.properties.cmapId === featureId;
+    });
+
+    const html = `<div class="border p-2"><h5>選択中地物</h5><pre class="p-2"><code>${featureSpaces.map(x => x.properties.spatialId).join('\n')}</code></pre></div>`;
     legendContainer.insertAdjacentHTML('beforeend', html);
   }
 }
@@ -286,43 +291,10 @@ map
 
     html += '<div>空間ID (zfxy): <code>' + space.zfxyStr + '</code></div>';
     html += '<div>空間ID (hash): <code>' + space.tilehash + '</code></div>';
-    html += `<pre class="border p-2" style="max-height: 200px; overflow-y: scroll;"><code>${JSON.stringify(spaceFeatures, null, 2)}</code></pre>`;
+    html += `<pre class="border p-2" style="max-height: 400px; overflow-y: scroll;"><code>${JSON.stringify(spaceFeatures, null, 2)}</code></pre>`;
 
     document.getElementById('geojson-container').innerHTML = html;
   })
-  // .on('click', async (e) => {
-  //   const space = new SpatialId.Space({lat: e.lngLat.lat, lng: e.lngLat.lng}, currentZoom);
-  //   const getFloor = ({f, z}) => f * (2**25) / (2**z);
-
-  //   let html = '';
-  //   html += '<div>空間ID (zfxy): <code>' + space.zfxyStr + '</code></div>';
-  //   html += '<div>空間ID (hash): <code>' + space.tilehash + '</code></div>';
-  //   // html += (await Promise.all(
-  //   //   Object.entries(map.getStyle().sources).map(async ([src_name, tilejson]) => {
-  //   //     if (!tilejson.metadata?.spatialIdSrc) return '';
-
-  //   //     // console.log(tilejson);
-  //   //     const resp = await SpatialIdRequest.requestToGeoJSON(tilejson, space);
-  //   //     // console.log(src_name, resp);
-
-  //   //     let html = '<details open>';
-  //   //     html += '<summary>' + src_name + ` (${resp.features.length})` + '</summary>';
-  //   //     html += '<pre class="border p-2" style="max-height: 200px; overflow-y: scroll;"><code>' + JSON.stringify(resp, null, 2) + '</code></pre>';
-
-  //   //     if (src_name === 'fudosan_data') {
-  //   //       html += '<div class="border p-2" style="max-height: 200px; overflow-y: scroll;"><ul>';
-  //   //       for (const feature of resp.features) {
-  //   //         html += '<li><a href="https://tileserver.dejicho-chosa.geolonia-dev.click/fudosan_data/buildings/' + feature.properties['棟ID'] + '" target="_blank">' + feature.properties['棟名'] + '</a></li>';
-  //   //       }
-  //   //       html += '</ul></div>';
-  //   //     }
-
-  //   //     html += '</details>';
-  //   //     return html;
-  //   //   })
-  //   // )).join('');
-  //   document.getElementById('geojson-container').innerHTML = html;
-  // })
   .on('moveend', () => {
     refreshGrids();
   })
