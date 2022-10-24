@@ -12,18 +12,6 @@ const lineWidth_bold = {
 }
 
 const layers = {
-  "PLATEAU 航空写真背景地図": [
-    {
-      "type": "raster",
-      "source": "plateau_bg",
-      "layout": {
-        "visibility": "none"
-      },
-      "metadata": {
-        "defaultHidden": true,
-      }
-    }
-  ],
   "地理院ベースマップ標準地図": [
     {
       "type": "raster",
@@ -38,18 +26,10 @@ const layers = {
   ],
   "工事現場背景地図": [
     {
-      "type": "fill",
-      "source": "cmap",
-      "paint": {
-        "fill-color": "#d9d0c9",
-        "fill-opacity": 0.8
-      }
-    },
-    {
       "type": "line",
       "source": "cmap",
       "paint": {
-        "line-color": "#d9d0c9",
+        "line-color": "#000",
         "line-width": lineWidth_thin,
       }
     }
@@ -142,7 +122,11 @@ const refreshCMapSpaces = () => {
     const spaces = SpatialId.Space.spacesForPolygon(cmapFeature.geometry, currentZoom);
     const spaceFeatures = spaces.map(s => {
       const polygon = s.toGeoJSON();
-      return turf.feature(polygon, { spatialId: s.zfxyStr, cmapId: cmapFeature.id, cmap: true });
+      return turf.feature(polygon, {
+        spatialId: s.zfxyStr,
+        constructionMapId: cmapFeature.id,
+        ...cmapFeature.properties,
+      });
     });
     features.push(...spaceFeatures);
   }
@@ -278,31 +262,37 @@ map
   })
   .on('click', (e) => {
     const space = new SpatialId.Space({lat: e.lngLat.lat, lng: e.lngLat.lng}, currentZoom);
+    const spaceFeatures = map.getSource('cmap-spaces')._data.features.filter(feature => {
+      return feature.properties.spatialId === space.zfxyStr;
+    });
+
+    map.getSource('space').setData({
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: space.toGeoJSON(),
+          properties: {
+            id: space.id,
+            // f_height: getFloor({...space.zfxy, f: space.zfxy.f + 1}),
+            // f_base: getFloor(space.zfxy),
+          }
+        }
+      ]
+    });
+
     // const getFloor = ({f, z}) => f * (2**25) / (2**z);
     let html = '';
 
     html += '<div>空間ID (zfxy): <code>' + space.zfxyStr + '</code></div>';
     html += '<div>空間ID (hash): <code>' + space.tilehash + '</code></div>';
+    html += `<pre class="border p-2" style="max-height: 200px; overflow-y: scroll;"><code>${JSON.stringify(spaceFeatures, null, 2)}</code></pre>`;
 
     document.getElementById('geojson-container').innerHTML = html;
   })
   // .on('click', async (e) => {
   //   const space = new SpatialId.Space({lat: e.lngLat.lat, lng: e.lngLat.lng}, currentZoom);
   //   const getFloor = ({f, z}) => f * (2**25) / (2**z);
-  //   map.getSource('space').setData({
-  //     type: 'FeatureCollection',
-  //     features: [
-  //       {
-  //         type: 'Feature',
-  //         geometry: space.toGeoJSON(),
-  //         properties: {
-  //           id: space.id,
-  //           f_height: getFloor({...space.zfxy, f: space.zfxy.f + 1}),
-  //           f_base: getFloor(space.zfxy),
-  //         }
-  //       }
-  //     ]
-  //   });
 
   //   let html = '';
   //   html += '<div>空間ID (zfxy): <code>' + space.zfxyStr + '</code></div>';

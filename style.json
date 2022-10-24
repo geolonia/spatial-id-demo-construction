@@ -4,14 +4,6 @@
   "glyphs": "https://glyphs.geolonia.com/{fontstack}/{range}.pbf",
   "sprite": "https://api.geolonia.com/v1/sprites/basic",
   "sources": {
-    "plateau_bg": {
-      "type": "raster",
-      "tiles": ["https://gic-plateau.s3.ap-northeast-1.amazonaws.com/2020/ortho/tiles/{z}/{x}/{y}.png"],
-      "minzoom": 10,
-      "maxzoom": 19,
-      "attribution": "",
-      "tileSize": 256
-    },
     "gis_bg": {
       "type": "raster",
       "tiles": ["https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png"],
@@ -31,7 +23,10 @@
         "features": [
           {
             "type": "Feature",
-            "properties": {},
+            "id": "9b7d7d6b-ed36-4cca-a3df-2939ee982135",
+            "properties": {
+              "kind": "obstacle"
+            },
             "geometry": {
               "coordinates": [
                 [
@@ -62,7 +57,10 @@
           },
           {
             "type": "Feature",
-            "properties": {},
+            "id": "aa073810-f06b-4d8c-b92c-ae623b37061c",
+            "properties": {
+              "kind": "obstacle"
+            },
             "geometry": {
               "coordinates": [
                 [
@@ -93,7 +91,10 @@
           },
           {
             "type": "Feature",
-            "properties": {},
+            "id": "ce2b8484-0bf8-4f31-9037-1ee5228c5721",
+            "properties": {
+              "kind": "obstacle"
+            },
             "geometry": {
               "coordinates": [
                 [
@@ -124,7 +125,10 @@
           },
           {
             "type": "Feature",
-            "properties": {},
+            "id": "16a0ad2d-1bf6-43e0-9bf5-f8a0973a8c23",
+            "properties": {
+              "kind": "obstacle"
+            },
             "geometry": {
               "coordinates": [
                 [
@@ -155,7 +159,10 @@
           },
           {
             "type": "Feature",
-            "properties": {},
+            "id": "871fe43d-08d6-4c35-9342-97f04f37a0a1",
+            "properties": {
+              "kind": "obstacle"
+            },
             "geometry": {
               "coordinates": [
                 [
@@ -186,7 +193,10 @@
           },
           {
             "type": "Feature",
-            "properties": {},
+            "id": "d79092cf-bff1-4f17-955d-24c1c7d8dffd",
+            "properties": {
+              "kind": "obstacle"
+            },
             "geometry": {
               "coordinates": [
                 [
@@ -217,7 +227,10 @@
           },
           {
             "type": "Feature",
-            "properties": {},
+            "id": "e665f2ea-ac80-4123-a7ca-340f55061cb0",
+            "properties": {
+              "kind": "obstacle"
+            },
             "geometry": {
               "coordinates": [
                 [
@@ -248,7 +261,10 @@
           },
           {
             "type": "Feature",
-            "properties": {},
+            "id": "fc97a821-4f42-4ea4-8e06-5e97b2355a61",
+            "properties": {
+              "kind": "construction_area"
+            },
             "geometry": {
               "coordinates": [
                 [
