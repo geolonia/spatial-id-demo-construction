@@ -125,8 +125,28 @@ const refreshCMapSpaces = () => {
     });
     features.push(...spaceFeatures);
   }
+
+  for (const cmapFeature of map.getSource('cmap')._data.features) {
+    const spaces = SpatialId.Space.spacesForPolygon(cmapFeature.geometry, currentZoom);
+    const spaceFeatures = spaces.map(s => {
+      const polygon = s.toGeoJSON();
+      return turf.feature(polygon, { spatialId: s.zfxyStr, cmapId: cmapFeature.id, cmap: true });
+    });
+    features.push(...spaceFeatures);
+  }
+
   const geojson = turf.featureCollection(features);
   map.getSource('cmap-spaces').setData(geojson);
+}
+
+const refreshSelected = () => {
+  const features = draw.getSelected().features;
+  legendContainer.innerHTML = '';
+  for (const feature of features) {
+    const area = Math.round(turf.area(feature) * 100) / 100;
+    const html = `<div class="border p-2"><h5>選択中地物</h5><ul class="mb-0"><li>面積: ${area}m<sup>2</sup></li></ul></div>`;
+    legendContainer.insertAdjacentHTML('beforeend', html);
+  }
 }
 
 map
@@ -236,10 +256,13 @@ map
     })
 
     refreshGrids();
+    refreshCMapSpaces();
   })
   .on('zoomend', function() {
     const newZoom = Math.round(map.getZoom() + zoomAdd);
     currentZoom = rangeController.value = rangeIndicator.innerHTML = newZoom;
+    refreshGrids();
+    refreshCMapSpaces();
   })
   .on('click', async (e) => {
     const space = new SpatialId.Space({lat: e.lngLat.lat, lng: e.lngLat.lng}, currentZoom);
@@ -296,9 +319,14 @@ map
   })
   .on('draw.update', (e) => {
     refreshCMapSpaces();
+    refreshSelected();
   })
   .on('draw.delete', (e) => {
     refreshCMapSpaces();
+    refreshSelected();
+  })
+  .on('draw.selectionchange', (e) => {
+    refreshSelected();
   });
 
 window._mainMap = map;
