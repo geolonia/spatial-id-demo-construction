@@ -1,0 +1,65 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#map-container-outer {
+  position: absolute;
+  width: calc(100% - 450px);
+  height: 100%;
+  right: 0;
+}
+
+#map-container-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+#layers {
+  position: absolute;
+  width: 450px;
+  height: 100%;
+  left: 0;
+}
+
+#layer-list {
+  white-space: nowrap;
+  font-size: .9em;
+}
+
+#reat-range-container {
+  height: 38px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+#range-indicator {
+  background: white;
+  padding: 4px;
+}
+
+#mesh-population-container {
+  height: 38px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 40px;
+  text-align: center;
+}
+
+#mesh-population-container .mesh-indicator {
+  background: white;
+  padding: 4px;
+}

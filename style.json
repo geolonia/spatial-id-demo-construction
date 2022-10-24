@@ -1,0 +1,139 @@
+{
+  "version": 8,
+  "name": "JP PLATEAU",
+  "glyphs": "https://glyphs.geolonia.com/{fontstack}/{range}.pbf",
+  "sprite": "https://api.geolonia.com/v1/sprites/basic",
+  "sources": {
+    "plateau_bg": {
+      "type": "raster",
+      "tiles": ["https://gic-plateau.s3.ap-northeast-1.amazonaws.com/2020/ortho/tiles/{z}/{x}/{y}.png"],
+      "minzoom": 10,
+      "maxzoom": 19,
+      "attribution": "",
+      "tileSize": 256
+    },
+    "space": {
+      "type": "geojson",
+      "data": { "type": "FeatureCollection", "features": [] }
+    },
+    "cmap": {
+      "type": "geojson",
+      "data": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "coordinates": [
+                [
+                  [
+                    139.73132532824928,
+                    35.66657408663923
+                  ],
+                  [
+                    139.7308657092451,
+                    35.66613900145083
+                  ],
+                  [
+                    139.73099702895985,
+                    35.66602897953335
+                  ],
+                  [
+                    139.73108320752306,
+                    35.666103994493525
+                  ],
+                  [
+                    139.7309847177366,
+                    35.666184010373385
+                  ],
+                  [
+                    139.7312986539318,
+                    35.666487403189706
+                  ],
+                  [
+                    139.7314894778924,
+                    35.66635737783834
+                  ],
+                  [
+                    139.7310544813364,
+                    35.665987304525416
+                  ],
+                  [
+                    139.73134174321268,
+                    35.665758925093
+                  ],
+                  [
+                    139.73141561055252,
+                    35.66583560731111
+                  ],
+                  [
+                    139.73118169730958,
+                    35.66599897352954
+                  ],
+                  [
+                    139.73124940903864,
+                    35.66605398452789
+                  ],
+                  [
+                    139.73146280357656,
+                    35.66589061842207
+                  ],
+                  [
+                    139.73154487839815,
+                    35.665950630499836
+                  ],
+                  [
+                    139.73131506889678,
+                    35.66610232749561
+                  ],
+                  [
+                    139.73142586990656,
+                    35.666199013341924
+                  ],
+                  [
+                    139.73170287243033,
+                    35.66614900343582
+                  ],
+                  [
+                    139.7315941232913,
+                    35.66622901927059
+                  ],
+                  [
+                    139.73171107991362,
+                    35.66633403993197
+                  ],
+                  [
+                    139.73132532824928,
+                    35.66657408663923
+                  ]
+                ]
+              ],
+              "type": "Polygon"
+            }
+          }
+        ]
+      }
+    },
+    "cmap-spaces": {
+      "type": "geojson",
+      "data": { "type": "FeatureCollection", "features": [] }
+    },
+    "grids": {
+      "type": "geojson",
+      "data": { "type": "FeatureCollection", "features": [] }
+    }
+  },
+  "layers": [
+    {"id": "background", "type": "background", "paint": { "background-color": "#FFFFFF" }},
+    {
+      "id": "current-space",
+      "type": "fill",
+      "source": "space",
+      "paint": {
+        "fill-color": "#0f0",
+        "fill-opacity": 0.8
+      }
+    }
+  ]
+}
