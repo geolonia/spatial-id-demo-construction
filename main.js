@@ -295,6 +295,10 @@ map
 
     document.getElementById('geojson-container').innerHTML = html;
   })
+  .on('mousemove', (e) => {
+    // console.log(e.lngLat);
+    document.getElementById('currentLnglat').innerText = `${e.lngLat.lng.toFixed(6)}, ${e.lngLat.lat.toFixed(6)}`;
+  })
   .on('moveend', () => {
     refreshGrids();
   })
